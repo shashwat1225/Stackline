@@ -9,7 +9,7 @@ def tokenize_and_pad(sentences, vocab, n):
     if unk_token not in vocab:
         vocab[unk_token] = len(vocab)
     
-    #Empty list to store tokenized and padded sequences
+    #List to store tokenized and padded sequences
     tokenized_sequences = []
     
     #When desired length is zero

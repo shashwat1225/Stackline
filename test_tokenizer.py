@@ -1,5 +1,22 @@
 from tokenizer import tokenize_and_pad
 
+def additional_test():
+    vocab = {'<PAD>': 0, '<UNK>': 1, 'I': 2, 'love': 3, 'coding': 4}
+    sentences = ['I love coding', 'coding is fun']
+    n = 5
+
+    result = tokenize_and_pad(sentences, vocab, n)
+    text_case = """
+vocab = {'<PAD>': 0, '<UNK>': 1, 'I': 2, 'love': 3, 'coding': 4}
+    sentences = ['I love coding', 'coding is fun']
+    n = 5
+
+    result = tokenize_and_pad(sentences, vocab, n)
+"""
+    print("Question's Test case:", text_case)
+    print("Tokenizer's output:", result)
+    
+
 def test_tokenize_and_pad():
     vocab = {'<PAD>': 0, '<UNK>': 1, 'I': 2, 'love': 3, 'coding': 4, 'is': 5, 'fun': 6}
 
@@ -127,23 +144,7 @@ def test_tokenize_and_pad():
 
     print("All test cases designed by the candidate passed!")
 
-def additional_test():
-    vocab = {'<PAD>': 0, '<UNK>': 1, 'I': 2, 'love': 3, 'coding': 4}
-    sentences = ['I love coding', 'coding is fun']
-    n = 5
 
-    result = tokenize_and_pad(sentences, vocab, n)
-    text_case = """
-vocab = {'<PAD>': 0, '<UNK>': 1, 'I': 2, 'love': 3, 'coding': 4}
-    sentences = ['I love coding', 'coding is fun']
-    n = 5
-
-    result = tokenize_and_pad(sentences, vocab, n)
-"""
-    print("Question's Test case:", text_case)
-    print("Tokenizer's output:", result)
-
-# Now, you can call additional_test() function along with your existing tests
 if __name__ == "__main__":
     test_tokenize_and_pad()
     additional_test()
