@@ -8,30 +8,45 @@ def process_json_files(file_paths):
         with open(file_path) as file:
             data = json.load(file)
 
-            if 'students' in data:
-                df = pd.DataFrame(data['students'])
-                df.rename(columns={'name': 'name', 'age': 'age', 'grade': 'grade'}, inplace=True)
-            elif 'data' in data:
-                df = pd.DataFrame(data['data'])
-                df.rename(columns={'student_name': 'name', 'student_age': 'age', 'student_grade': 'grade'}, inplace=True)
-            else:
-                raise ValueError(f"Unexpected JSON structure in file: {file_path}")
+            # Find the key containing the student data
+            student_key = None
+            for key in data.keys():
+                if isinstance(data[key], list) and data[key]:
+                    student_key = key
+                    break
 
-            #Data type consistency
+            if student_key is None:
+                raise ValueError(f"No valid student data found in file: {file_path}")
+
+            df = pd.DataFrame(data[student_key])
+
+            # Rename columns to normalized names
+            column_mapping = {
+                col: 'name' for col in df.columns if 'name' in col.lower()
+            }
+            column_mapping.update({
+                col: 'age' for col in df.columns if 'age' in col.lower()
+            })
+            column_mapping.update({
+                col: 'grade' for col in df.columns if 'grade' in col.lower()
+            })
+            df.rename(columns=column_mapping, inplace=True)
+
+            # Ensure consistent data types
             df['name'] = df['name'].astype(str)
             df['age'] = pd.to_numeric(df['age'], errors='coerce')
             df['grade'] = df['grade'].astype(str)
 
             dataframes.append(df)
 
-    #Handling missing values and merging the DFs
+    # Combine DataFrames and handle missing values
     combined_df = pd.concat(dataframes, ignore_index=True)
     combined_df['age'].fillna(combined_df['age'].mean(), inplace=True)
     combined_df['grade'].fillna('Unknown', inplace=True)
 
     return combined_df
 
-#Usage
+# Usage
 file_paths = ['json1.json', 'json2.json']
 result_df = process_json_files(file_paths)
 print(result_df)

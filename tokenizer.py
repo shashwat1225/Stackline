@@ -24,11 +24,11 @@ def tokenize_and_pad(sentences, vocab, n):
         tokens = [vocab.get(word, vocab[unk_token]) for word in words]
         
         #Truncation if the sequence exceeds the desired length n
-        if len(tokens) > n:
+        if len(tokens) >= n:
             tokens = tokens[:n]
         
         #Padding the sequence to length n
-        if len(tokens) < n:
+        elif len(tokens) < n:
             tokens.extend([vocab[pad_token]] * (n - len(tokens)))
         
         #Getting the tokenized and padded sequence list

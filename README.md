@@ -51,6 +51,6 @@ python test_tokenizer.py
 To run the data normalization script on the test cases provided as well as the ones created by me, run the following command:
 
 ```bash
-python test_df_normalizer.py
+python df_normalizer.py
 ```
 
