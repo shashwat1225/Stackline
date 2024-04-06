@@ -16,7 +16,7 @@ The goal is to demonstrate text processing and data manipulation using Python fo
 
 ## Installation
 
-1. Unzip the project folder and navigate to the project directory.
+1. Unzip the project folder and navigate to the project directory through the terminal.
 
 2. Create a virtual environment (optional but recommended):
 
