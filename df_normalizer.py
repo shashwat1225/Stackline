@@ -8,7 +8,7 @@ def process_json_files(file_paths):
         with open(file_path) as file:
             data = json.load(file)
 
-            # Find the key containing the student data
+            #Identifying the key containing the student data
             student_key = None
             for key in data.keys():
                 if isinstance(data[key], list) and data[key]:
@@ -20,7 +20,7 @@ def process_json_files(file_paths):
 
             df = pd.DataFrame(data[student_key])
 
-            # Rename columns to normalized names
+            #Renaming the columns to normalized names
             column_mapping = {
                 col: 'name' for col in df.columns if 'name' in col.lower()
             }
@@ -32,14 +32,14 @@ def process_json_files(file_paths):
             })
             df.rename(columns=column_mapping, inplace=True)
 
-            # Ensure consistent data types
+            #Ensuring consistent data types
             df['name'] = df['name'].astype(str)
             df['age'] = pd.to_numeric(df['age'], errors='coerce')
             df['grade'] = df['grade'].astype(str)
 
             dataframes.append(df)
 
-    # Combine DataFrames and handle missing values
+    #Combining DataFrames and handling missing values
     combined_df = pd.concat(dataframes, ignore_index=True)
     combined_df['age'].fillna(combined_df['age'].mean(), inplace=True)
     combined_df['grade'].fillna('Unknown', inplace=True)
